@@ -5,9 +5,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Dynamic Price Calculator</title>
 		<script src="https://cdn.tailwindcss.com"></script>
-		<script
+		<!-- <script
 			src="https://cdn.jsdelivr.net/gh/sweir1/ImagicoQuoteGeneration@master/price-calculator.js"
-			defer></script>
+			defer></script>  -->
+		<script src="price-calculator.js" defer></script>
 		<style>
 			#typeform-style-calculator {
 				display: flex;
@@ -17,6 +18,17 @@
 			}
 			#question-container {
 				text-align: left;
+				width: 100%;
+			}
+			#question-container h2,
+			#question-container label,
+			#question-container input {
+				text-align: left;
+			}
+			.error-message {
+				color: #e53e3e;
+				margin-top: 0rem;
+				font-size: 0.875rem;
 			}
 		</style>
 	</head>
@@ -32,6 +44,7 @@
 				</button>
 			</div>
 			<div id="question-container" class="mb-6 hidden"></div>
+			<div id="error-message" class="error-message hidden"></div>
 			<div id="navigation" class="flex justify-between w-full hidden">
 				<button
 					id="prev-btn"

@@ -234,6 +234,7 @@ function displayQuestion(index) {
         `;
 	}
 
+	hideErrorMessage();
 	document.getElementById("question-container").innerHTML = html;
 }
 
@@ -274,6 +275,30 @@ function isCurrentQuestionAnswered() {
 		return input && input.value && input.value >= question.min && input.value <= question.max;
 	}
 	return false;
+}
+
+function showErrorMessage(message) {
+	const errorMessage = document.getElementById("error-message");
+	const questionContainer = document.getElementById("question-container");
+
+	errorMessage.textContent = message;
+	errorMessage.classList.add("mb-6");
+	errorMessage.classList.remove("hidden");
+
+	questionContainer.classList.remove("mb-6");
+	questionContainer.classList.add("mb-0");
+}
+
+function hideErrorMessage() {
+	const errorMessage = document.getElementById("error-message");
+	const questionContainer = document.getElementById("question-container");
+
+	errorMessage.textContent = "";
+	errorMessage.classList.add("hidden");
+	errorMessage.classList.remove("mb-6");
+
+	questionContainer.classList.remove("mb-0");
+	questionContainer.classList.add("mb-6");
 }
 
 function getNextQuestionIndex() {
@@ -377,7 +402,7 @@ function initializeForm() {
 
 	nextBtn.addEventListener("click", () => {
 		if (!isCurrentQuestionAnswered()) {
-			alert("Please answer the current question before proceeding.");
+			showErrorMessage("Please select an option to continue.");
 			return;
 		}
 
