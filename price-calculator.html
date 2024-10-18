@@ -8,24 +8,41 @@
 		<script
 			src="https://cdn.jsdelivr.net/gh/sweir1/ImagicoQuoteGeneration@master/price-calculator.js"
 			defer></script>
+		<style>
+			#typeform-style-calculator {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+			#question-container {
+				text-align: left;
+			}
+		</style>
 	</head>
-	<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-		<div class="max-w-md w-full bg-white rounded-lg shadow-md p-6">
-			<h2 class="text-2xl font-bold mb-6">Price Calculator</h2>
-			<div id="typeform-style-calculator" class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-				<div id="question-container" class="mb-6"></div>
-				<div id="navigation" class="flex justify-between">
-					<button
-						id="prev-btn"
-						class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition duration-300 hidden">
-						Previous
-					</button>
-					<button
-						id="next-btn"
-						class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
-						Next
-					</button>
-				</div>
+	<body>
+		<div id="typeform-style-calculator" class="max-w-md mx-auto p-6">
+			<h2 class="text-2xl font-bold mb-6 text-center">Price Calculator</h2>
+			<div id="start-screen" class="text-center mb-6">
+				<p class="mb-4">Ready to get a custom quote for your project?</p>
+				<button
+					id="start-btn"
+					class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
+					Get Quote
+				</button>
+			</div>
+			<div id="question-container" class="mb-6 hidden"></div>
+			<div id="navigation" class="flex justify-between w-full hidden">
+				<button
+					id="prev-btn"
+					class="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition duration-300 hidden">
+					Previous
+				</button>
+				<button
+					id="next-btn"
+					class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 ml-auto">
+					Next
+				</button>
 			</div>
 		</div>
 	</body>

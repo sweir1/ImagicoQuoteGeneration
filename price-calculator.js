@@ -356,6 +356,19 @@ function calculatePrice() {
 }
 
 function initializeForm() {
+	const startScreen = document.getElementById("start-screen");
+	const startBtn = document.getElementById("start-btn");
+	const questionContainer = document.getElementById("question-container");
+	const navigation = document.getElementById("navigation");
+
+	startBtn.addEventListener("click", () => {
+		startScreen.classList.add("hidden");
+		questionContainer.classList.remove("hidden");
+		navigation.classList.remove("hidden");
+		displayQuestion(currentQuestionIndex);
+		updateNavigation();
+	});
+
 	displayQuestion(currentQuestionIndex);
 	updateNavigation();
 
