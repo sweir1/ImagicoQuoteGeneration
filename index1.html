@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Price Calculator</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 20px;
+			}
+
+			.modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 1000;
+				overflow-y: auto;
+			}
+
+			.modal-content {
+				position: relative;
+				background-color: white;
+				width: 90%;
+				max-width: 800px;
+				margin: 50px auto;
+				padding: 30px;
+				border-radius: 8px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.close-button {
+				position: absolute;
+				right: 20px;
+				top: 20px;
+				font-size: 24px;
+				cursor: pointer;
+				color: #666;
+			}
+
+			.question-section {
+				margin-bottom: 30px;
+				padding: 20px;
+				border: 1px solid #eee;
+				border-radius: 8px;
+				background-color: #f9f9f9;
+			}
+
+			.question-section.hidden {
+				display: none;
+			}
+
+			.section-title {
+				font-size: 18px;
+				font-weight: bold;
+				margin-bottom: 15px;
+				color: #333;
+			}
+
+			.option-label {
+				display: block;
+				padding: 12px;
+				margin-bottom: 10px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				background-color: white;
+			}
+
+			.option-label:hover {
+				background-color: #f8f8f8;
+			}
+
+			.option-label input {
+				margin-right: 10px;
+			}
+
+			.option-label.selected {
+				background-color: #f0f7ff;
+				border-color: #007bff;
+			}
+
+			.number-input {
+				width: 100%;
+				padding: 12px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				margin-bottom: 10px;
+			}
+
+			.price-display {
+				position: sticky;
+				bottom: 0;
+				background-color: white;
+				padding: 20px;
+				border-top: 2px solid #eee;
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin-top: 30px;
+				box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.trigger-button {
+				background-color: #f26722;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="trigger-button" onclick="openModal()">Calculate Price</button>
+
+		<div id="priceCalculatorModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button" onclick="closeModal()">&times;</span>
+				<div id="question-container">
+					<!-- Questions will be dynamically inserted here -->
+				</div>
+				<div id="price-display" class="price-display">Total Price: $0.00</div>
+			</div>
+		</div>
+
+		<script src="price-calculator-new.js"></script>
+	</body>
+</html>

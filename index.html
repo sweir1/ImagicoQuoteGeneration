@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Popup Form</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 20px;
+			}
+
+			.modal {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.5);
+				z-index: 1000;
+			}
+
+			.modal-content {
+				position: relative;
+				background-color: white;
+				width: 90%;
+				max-width: 500px;
+				margin: 50px auto;
+				padding: 30px;
+				border-radius: 8px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+
+			.close-button {
+				position: absolute;
+				right: 20px;
+				top: 20px;
+				font-size: 24px;
+				cursor: pointer;
+				color: #666;
+			}
+
+			h2 {
+				margin-top: 0;
+				margin-bottom: 20px;
+				color: #333;
+			}
+
+			.form-group {
+				margin-bottom: 20px;
+			}
+
+			input,
+			select {
+				width: 100%;
+				padding: 10px;
+				border: 1px solid #ddd;
+				border-radius: 4px;
+				box-sizing: border-box;
+				margin-top: 5px;
+			}
+
+			label {
+				display: block;
+				margin-bottom: 5px;
+				color: #666;
+			}
+
+			.submit-btn {
+				background-color: #f26722;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+				width: 100%;
+			}
+
+			.trigger-btn {
+				background-color: #f26722;
+				color: white;
+				padding: 12px 24px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+				font-size: 16px;
+			}
+
+			.privacy-text {
+				font-size: 14px;
+				color: #666;
+				margin-top: 20px;
+			}
+
+			.privacy-text a {
+				color: #f26722;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<button class="trigger-btn" onclick="openModal()">Let us know more about your company</button>
+
+		<div id="formModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button" onclick="closeModal()">&times;</span>
+				<h2>Let us know more about your company</h2>
+				<form onsubmit="event.preventDefault(); submitForm();">
+					<div class="form-group">
+						<label for="firstName">First name</label>
+						<input type="text" id="firstName" required />
+					</div>
+
+					<div class="form-group">
+						<label for="lastName">Last name</label>
+						<input type="text" id="lastName" required />
+					</div>
+
+					<div class="form-group">
+						<label for="jobTitle">Job title</label>
+						<input type="text" id="jobTitle" required />
+					</div>
+
+					<div class="form-group">
+						<label for="email">Business email</label>
+						<input type="email" id="email" required />
+					</div>
+
+					<div class="form-group">
+						<label for="phone">Phone number</label>
+						<input type="tel" id="phone" value="+44" required />
+					</div>
+
+					<div class="form-group">
+						<label for="company">Company name</label>
+						<input type="text" id="company" required />
+					</div>
+
+					<div class="form-group">
+						<label for="size">Company size</label>
+						<select id="size" required>
+							<option value="">Select size</option>
+							<option value="1-10">1-10 employees</option>
+							<option value="11-50">11-50 employees</option>
+							<option value="51-200">51-200 employees</option>
+							<option value="201+">201+ employees</option>
+						</select>
+					</div>
+
+					<button type="submit" class="submit-btn">Continue</button>
+
+					<p class="privacy-text">By submitting the form I agree with the <a href="#">Privacy policy</a></p>
+				</form>
+			</div>
+		</div>
+
+		<script>
+			function openModal() {
+				document.getElementById("formModal").style.display = "block";
+				document.body.style.overflow = "hidden";
+			}
+
+			function closeModal() {
+				document.getElementById("formModal").style.display = "none";
+				document.body.style.overflow = "auto";
+			}
+
+			function submitForm() {
+				// Handle form submission here
+				console.log("Form submitted");
+				closeModal();
+			}
+
+			// Close modal if clicking outside of it
+			window.onclick = function (event) {
+				const modal = document.getElementById("formModal");
+				if (event.target == modal) {
+					closeModal();
+				}
+			};
+		</script>
+	</body>
+</html>
