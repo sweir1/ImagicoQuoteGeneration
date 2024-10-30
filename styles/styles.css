@@ -418,3 +418,7 @@ select {
 	color: var(--text-secondary-color, #666);
 	font-size: 0.9em;
 }
+
+.option-label {
+	font-size: 16px;
+}

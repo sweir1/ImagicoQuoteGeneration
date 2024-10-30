@@ -457,19 +457,20 @@
 		questions.forEach((question) => {
 			const section = document.getElementById(`section-${question.id}`);
 			if (!section) return;
-
 			if (question.condition) {
 				const shouldShow = question.condition(answers);
 				section.classList.toggle("hidden", !shouldShow);
-
-				const grandparentDiv = section.parentElement?.parentElement; // Get the parent's parent element
-
+				const grandparentDiv = section.parentElement?.parentElement;
 				if (grandparentDiv) {
-					grandparentDiv.style.display = shouldShow ? "flex" : "none";
+					// Special handling for video and picture sections
+					if (question.id === "videoCount" || question.id === "pictureCount") {
+						grandparentDiv.style.display = "flex";
+					} else {
+						grandparentDiv.style.display = shouldShow ? "flex" : "none";
+					}
 				}
 			}
 		});
-
 		window.dropdownHandler.initializeCustomDropdowns();
 		window.multiSelectDropdownHandler.initializeMultiSelectDropdowns();
 	}
