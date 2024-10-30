@@ -16,19 +16,42 @@ function closeModal() {
 
 function displayAllQuestions() {
 	const container = document.getElementById("question-container");
-	container.innerHTML = questions
-		.map(
-			(question, index) => `
-        <div id="section-${question.id}" class="question-section ${question.condition ? "hidden" : ""}">
-            <div class="section-title">${question.text}</div>
-            ${generateQuestionHTML(question)}
-        </div>
-    `,
-		)
-		.join("");
 
-	// Add event listeners to all inputs
-	document.querySelectorAll("input").forEach((input) => {
+	// Group questions that should be side by side
+	const initialQuestions = questions.filter((q) => ["solutionType", "mediaType"].includes(q.id));
+
+	const otherQuestions = questions.filter((q) => !["solutionType", "mediaType"].includes(q.id));
+
+	// Create the layout
+	container.innerHTML = `
+        <div class="form-row">
+            ${initialQuestions
+				.map(
+					(question, index) => `
+                <div class="form-column">
+                    <div id="section-${question.id}" class="question-section ${question.condition ? "hidden" : ""}">
+                        <div class="section-title">${question.text}</div>
+                        ${generateQuestionHTML(question)}
+                    </div>
+                </div>
+            `,
+				)
+				.join("")}
+        </div>
+        ${otherQuestions
+			.map(
+				(question, index) => `
+            <div id="section-${question.id}" class="question-section ${question.condition ? "hidden" : ""}">
+                <div class="section-title">${question.text}</div>
+                ${generateQuestionHTML(question)}
+            </div>
+        `,
+			)
+			.join("")}
+    `;
+
+	// Add event listeners
+	document.querySelectorAll("input, select").forEach((input) => {
 		input.addEventListener("change", () => {
 			handleInputChange(input);
 		});
@@ -36,36 +59,89 @@ function displayAllQuestions() {
 }
 
 function generateQuestionHTML(question) {
-	if (question.type === "radio") {
-		return question.options
-			.map(
-				(option) => `
-            <label class="option-label">
-                <input type="radio"
-                       name="${question.id}"
-                       value="${option.value}"
-                       ${answers[question.id] === option.value ? "checked" : ""}>
-                ${option.label}
-            </label>
-        `,
-			)
-			.join("");
-	} else if (question.type === "checkbox") {
-		return `<div class="checkbox-group">
-            ${question.options
-				.map(
-					(option) => `
-                <label class="option-label">
-                    <input type="checkbox"
-                           name="${question.id}"
-                           value="${option.value}"
-                           ${answers[question.id]?.includes(option.value) ? "checked" : ""}>
-                    ${option.label}
-                </label>
-            `,
-				)
-				.join("")}
-        </div>`;
+	// Define which questions should be dropdowns
+	const dropdownQuestions = [
+		"solutionType",
+		"mediaType",
+		"addPictures",
+		"turnaroundTime",
+		"revisions",
+		"supportLevel",
+		"editingComplexity",
+		"concurrentProjects",
+		"commitmentLevel",
+	];
+
+	// Define which questions should be cards
+	const cardQuestions = ["videoCount", "pictureCount", "additionalServices", "editingType"];
+
+	if (dropdownQuestions.includes(question.id)) {
+		return `
+            <div class="select-container">
+                <select name="${question.id}">
+                    <option value="">Please select...</option>
+                    ${question.options
+						.map(
+							(option) => `
+                        <option value="${option.value}"
+                                ${answers[question.id] === option.value ? "selected" : ""}>
+                            ${option.label}
+                            ${option.price ? ` ($${option.price})` : ""}
+                            ${
+								option.multiplier
+									? ` (${option.multiplier > 1 ? "+" : "-"}${Math.abs((option.multiplier - 1) * 100).toFixed(0)}%)`
+									: ""
+							}
+                        </option>
+                    `,
+						)
+						.join("")}
+                </select>
+            </div>
+        `;
+	} else if (cardQuestions.includes(question.id)) {
+		return `
+            <div class="options-grid">
+                ${question.options
+					.map(
+						(option) => `
+                    <div class="option-card ${answers[question.id] === option.value ? "selected" : ""}"
+                         onclick="handleCardClick(this, '${question.id}', '${option.value}')">
+                        <input type="${question.type}"
+                               name="${question.id}"
+                               value="${option.value}"
+                               ${question.type === "radio" && answers[question.id] === option.value ? "checked" : ""}
+                               ${question.type === "checkbox" && answers[question.id]?.includes(option.value) ? "checked" : ""}>
+                        <div class="option-title">${option.label}</div>
+                        ${
+							option.price
+								? `
+                            <div class="option-description">$${option.price}</div>
+                        `
+								: ""
+						}
+                        ${
+							option.multiplier
+								? `
+                            <div class="option-description">
+                                ${option.multiplier > 1 ? "+" : "-"}${Math.abs((option.multiplier - 1) * 100).toFixed(0)}%
+                            </div>
+                        `
+								: ""
+						}
+                        ${
+							option.priceIncrease
+								? `
+                            <div class="option-description">+$${option.priceIncrease}</div>
+                        `
+								: ""
+						}
+                    </div>
+                `,
+					)
+					.join("")}
+            </div>
+        `;
 	} else if (question.type === "number") {
 		return `
             <input type="number"
@@ -78,6 +154,27 @@ function generateQuestionHTML(question) {
         `;
 	}
 	return "";
+}
+
+// Add this helper function for card clicks
+function handleCardClick(card, questionId, value) {
+	const input = card.querySelector("input");
+	if (input.type === "radio") {
+		// Unselect all other cards in the group
+		document
+			.querySelectorAll(`[name="${questionId}"]`)
+			.forEach((inp) => inp.closest(".option-card").classList.remove("selected"));
+		input.checked = true;
+	} else {
+		// Toggle checkbox
+		input.checked = !input.checked;
+	}
+
+	// Update visual selection
+	card.classList.toggle("selected", input.checked);
+
+	// Trigger input change
+	handleInputChange(input);
 }
 
 function handleInputChange(input) {

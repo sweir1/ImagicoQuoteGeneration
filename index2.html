@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Price Calculator</title>
+		<link rel="stylesheet" href="styles/styles.css" />
+	</head>
+	<body>
+		<button class="trigger-button" onclick="openModal()">Calculate Price</button>
+		<div id="priceCalculatorModal" class="modal">
+			<div class="modal-content">
+				<span class="close-button" onclick="closeModal()">&times;</span>
+				<div id="question-container">
+					<!-- Questions will be dynamically inserted here -->
+				</div>
+				<div id="price-display" class="price-display">Total Price: $0.00</div>
+			</div>
+		</div>
+		<script src="scripts/dropdown-selection.js"></script>
+		<script src="scripts/priceCalculator.js"></script>
+		<script></script>
+	</body>
+</html>
