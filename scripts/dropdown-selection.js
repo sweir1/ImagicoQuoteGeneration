@@ -29,12 +29,14 @@ window.dropdownHandler = {
 			// Add click event for trigger
 			trigger.addEventListener("click", (e) => {
 				e.stopPropagation();
-				// Close all other dropdowns
-				document.querySelectorAll(".custom-select-container").forEach((cont) => {
-					if (cont !== container) {
-						cont.classList.remove("open");
-					}
-				});
+				// Close all other dropdowns (both regular and multi-select)
+				document
+					.querySelectorAll(".custom-select-container, .custom-multi-select-container")
+					.forEach((cont) => {
+						if (cont !== container) {
+							cont.classList.remove("open");
+						}
+					});
 				container.classList.toggle("open");
 			});
 

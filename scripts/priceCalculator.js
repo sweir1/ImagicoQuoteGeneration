@@ -270,7 +270,7 @@
 		const otherQuestions = questions.filter((q) => !["solutionType", "mediaType"].includes(q.id));
 
 		let html = `
-			        <div class="form-row">
+			        <div class="form-row" style="display: flex">
 			            ${initialQuestions
 							.map(
 								(question) => `
@@ -461,9 +461,16 @@
 			if (question.condition) {
 				const shouldShow = question.condition(answers);
 				section.classList.toggle("hidden", !shouldShow);
+
+				const grandparentDiv = section.parentElement?.parentElement; // Get the parent's parent element
+
+				if (grandparentDiv) {
+					grandparentDiv.style.display = shouldShow ? "flex" : "none";
+				}
 			}
 		});
-		window.dropdownHandler.initializeCustomDropdowns(); // Add here
+
+		window.dropdownHandler.initializeCustomDropdowns();
 		window.multiSelectDropdownHandler.initializeMultiSelectDropdowns();
 	}
 
