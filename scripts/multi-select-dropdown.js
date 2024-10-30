@@ -1,13 +1,16 @@
 window.multiSelectDropdownHandler = {
 	initializeMultiSelectDropdowns: function () {
-		// Helper function to update trigger text
+		// Helper function to update trigger text and styling
 		const updateTriggerText = (container, trigger, options) => {
 			const selectedCount = container.selectedValues.length;
 			const placeholder = trigger.dataset.placeholder;
 
+			// Add or remove has-value class based on selection
 			if (selectedCount === 0) {
 				trigger.innerHTML = placeholder;
+				trigger.classList.remove("has-value");
 			} else {
+				trigger.classList.add("has-value");
 				// Convert NodeList to Array before using find
 				const optionsArray = Array.from(options);
 
@@ -47,6 +50,11 @@ window.multiSelectDropdownHandler = {
 				const newOption = option.cloneNode(true);
 				option.parentNode.replaceChild(newOption, option);
 			});
+
+			// Check if there are initial selections and add has-value class
+			if (originalSelect && Array.from(originalSelect.selectedOptions).length > 0) {
+				newTrigger.classList.add("has-value");
+			}
 		});
 
 		// Add new event listeners
@@ -55,10 +63,9 @@ window.multiSelectDropdownHandler = {
 			const options = container.querySelectorAll(".custom-option");
 			const originalSelect = container.parentElement.querySelector("select");
 
-			// Store selected values array
 			container.selectedValues = [];
 
-			// Initialize selected values from existing answers
+			// Initialize selected values and trigger styling
 			options.forEach((option) => {
 				if (option.classList.contains("selected")) {
 					container.selectedValues.push(option.dataset.value);

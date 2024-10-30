@@ -9,11 +9,15 @@ window.dropdownHandler = {
 			// Remove old event listeners (if any) by cloning and replacing elements
 			const newTrigger = trigger.cloneNode(true);
 			trigger.parentNode.replaceChild(newTrigger, trigger);
-
 			options.forEach((option) => {
 				const newOption = option.cloneNode(true);
 				option.parentNode.replaceChild(newOption, option);
 			});
+
+			// Check if there's an initial value and add has-value class
+			if (originalSelect && originalSelect.value) {
+				newTrigger.classList.add("has-value");
+			}
 		});
 
 		// Add new event listeners
@@ -42,6 +46,13 @@ window.dropdownHandler = {
 
 					// Update trigger text
 					trigger.textContent = selectedText;
+
+					// Add or remove has-value class based on selection
+					if (selectedValue && selectedValue !== "") {
+						trigger.classList.add("has-value");
+					} else {
+						trigger.classList.remove("has-value");
+					}
 
 					// Update original select
 					if (originalSelect) {
