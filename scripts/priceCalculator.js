@@ -208,6 +208,7 @@
 		answers = {};
 		displayAllQuestions();
 		window.dropdownHandler.initializeCustomDropdowns();
+		window.multiSelectDropdownHandler.initializeMultiSelectDropdowns();
 		updateVisibleSections();
 	};
 
@@ -236,7 +237,28 @@
 	};
 
 	window.handleSelectChange = (select) => {
-		answers[select.name] = select.value;
+		// Check if it's a multiple select
+		if (select.multiple) {
+			// Get all selected options and map to array of values
+			answers[select.name] = Array.from(select.selectedOptions).map((option) => option.value);
+		} else {
+			// Regular single-select handling
+			answers[select.name] = select.value;
+		}
+		updateVisibleSections();
+		updatePrice();
+	};
+
+	window.handleInputChange = function (input) {
+		if (input.type === "radio") {
+			answers[input.name] = input.value;
+		} else if (input.type === "checkbox") {
+			answers[input.name] = Array.from(document.querySelectorAll(`input[name="${input.name}"]:checked`)).map(
+				(el) => el.value,
+			);
+		} else if (input.type === "number") {
+			answers[input.name] = parseInt(input.value) || 0;
+		}
 		updateVisibleSections();
 		updatePrice();
 	};
@@ -254,7 +276,6 @@
 								(question) => `
 			                <div class="form-column">
 			                    <div id="section-${question.id}" class="question-section">
-			                        <div class="section-title">${question.text}</div>
 			                        ${generateQuestionHTML(question)}
 			                    </div>
 			                </div>
@@ -269,7 +290,6 @@
 			            <div class="form-row">
 			                <div class="form-column">
 			                    <div id="section-${otherQuestions[i].id}" class="question-section ${otherQuestions[i].condition ? "hidden" : ""}">
-			                        <div class="section-title">${otherQuestions[i].text}</div>
 			                        ${generateQuestionHTML(otherQuestions[i])}
 			                    </div>
 			                </div>
@@ -278,7 +298,6 @@
 									? `
 			                    <div class="form-column">
 			                        <div id="section-${otherQuestions[i + 1].id}" class="question-section ${otherQuestions[i + 1].condition ? "hidden" : ""}">
-			                            <div class="section-title">${otherQuestions[i + 1].text}</div>
 			                            ${generateQuestionHTML(otherQuestions[i + 1])}
 			                        </div>
 			                    </div>
@@ -380,30 +399,42 @@
 
 		if (question.type === "checkbox") {
 			return `
-                    <div class="options-grid">
-                        ${question.options
+		        <div class="select-container">
+		            <select name="${question.id}" class="hidden-select" multiple style="display: none;">
+		                <option value="">${question.text}</option>
+		                ${question.options
 							.map(
 								(option) => `
-                            <div class="option-card ${answers[question.id]?.includes(option.value) ? "selected" : ""}"
-                                 onclick="handleCheckboxCardClick(this, '${question.id}', '${option.value}')">
-                                <input type="checkbox"
-                                       name="${question.id}"
-                                       value="${option.value}"
-                                       ${answers[question.id]?.includes(option.value) ? "checked" : ""}>
-                                <div class="option-title">${option.label}</div>
-                                ${
-									option.priceIncrease
-										? `
-                                    <div class="option-description">+$${option.priceIncrease}</div>
-                                `
-										: ""
-								}
-                            </div>
-                        `,
+		                        <option value="${option.value}" ${answers[question.id]?.includes(option.value) ? "selected" : ""}>
+		                            ${option.label}
+		                        </option>
+		                    `,
 							)
 							.join("")}
-                    </div>
-                `;
+		            </select>
+		            <div class="custom-multi-select-container">
+		                <div class="custom-select-trigger" tabindex="0" data-placeholder="${question.text}">
+		                    ${question.text}
+		                </div>
+		                <div class="custom-options">
+		                    ${question.options
+								.map(
+									(option) => `
+		                            <div class="custom-option ${answers[question.id]?.includes(option.value) ? "selected" : ""}"
+		                                 data-value="${option.value}">
+		                                <div class="option-content">
+		                                    <div class="checkbox"></div>
+		                                    <span class="option-label">${option.label}</span>
+		                                </div>
+		                                ${option.priceIncrease ? `<span class="price-increase">+$${option.priceIncrease}</span>` : ""}
+		                            </div>
+		                        `,
+								)
+								.join("")}
+		                </div>
+		            </div>
+		        </div>
+		    `;
 		}
 
 		if (question.type === "number") {
@@ -422,21 +453,6 @@
 		return "";
 	}
 
-	function handleInputChange(input) {
-		if (input.type === "radio") {
-			answers[input.name] = input.value;
-		} else if (input.type === "checkbox") {
-			answers[input.name] = Array.from(document.querySelectorAll(`input[name="${input.name}"]:checked`)).map(
-				(el) => el.value,
-			);
-		} else if (input.type === "number") {
-			answers[input.name] = parseInt(input.value) || 0;
-		}
-
-		updateVisibleSections();
-		updatePrice();
-	}
-
 	function updateVisibleSections() {
 		questions.forEach((question) => {
 			const section = document.getElementById(`section-${question.id}`);
@@ -448,6 +464,7 @@
 			}
 		});
 		window.dropdownHandler.initializeCustomDropdowns(); // Add here
+		window.multiSelectDropdownHandler.initializeMultiSelectDropdowns();
 	}
 
 	function updatePrice() {

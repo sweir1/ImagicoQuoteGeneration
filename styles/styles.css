@@ -155,6 +155,7 @@ select {
 	border: 1px solid var(--border-color);
 	border-radius: 6px;
 	font-size: 14px;
+	box-sizing: border-box;
 }
 
 .price-display {
@@ -259,4 +260,116 @@ select {
 	visibility: hidden;
 	position: absolute;
 	left: -9999px;
+}
+
+.custom-multi-select-container {
+	position: relative;
+	width: 100%;
+	min-height: 2.75rem;
+}
+
+.custom-multi-select-container .custom-select-trigger {
+	position: relative;
+	padding: 10px;
+	background: white;
+	border: 1px solid var(--border-color);
+	border-radius: 6px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.custom-multi-select-container .custom-select-trigger::after {
+	content: "";
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #666;
+	border-bottom: 2px solid #666;
+	transform: rotate(45deg);
+	transition: transform 0.3s;
+}
+
+.custom-multi-select-container.open .custom-select-trigger::after {
+	transform: rotate(-135deg);
+}
+
+.custom-multi-select-container .custom-options {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	right: 0;
+	background: white;
+	border: 1px solid var(--border-color);
+	border-radius: 6px;
+	margin-top: 4px;
+	display: none;
+	z-index: 10;
+}
+
+.custom-multi-select-container.open .custom-options {
+	display: block;
+}
+
+.custom-multi-select-container .custom-option {
+	padding: 10px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.custom-multi-select-container .custom-option .option-content {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.custom-multi-select-container .custom-option .checkbox {
+	width: 16px;
+	height: 16px;
+	border: 2px solid var(--border-color, #ddd);
+	border-radius: 3px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+}
+
+.custom-multi-select-container .custom-option.selected .checkbox {
+	background-color: var(--primary-color, #007bff);
+	border-color: var(--primary-color, #007bff);
+}
+
+.custom-multi-select-container .custom-option.selected .checkbox:after {
+	content: "";
+	width: 6px;
+	height: 9px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+	margin-bottom: 2px;
+}
+
+.custom-multi-select-container .custom-option:hover {
+	background: var(--hover-color);
+}
+
+.custom-multi-select-container .custom-option.selected {
+	background: var(--hover-color);
+}
+
+.custom-multi-select-container .selected-count {
+	background: var(--primary-color, #007bff);
+	color: white;
+	padding: 2px 6px;
+	border-radius: 12px;
+	font-size: 0.85em;
+	margin-left: 8px;
+}
+
+.price-increase {
+	margin-left: 8px;
+	color: var(--text-secondary-color, #666);
+	font-size: 0.9em;
 }
