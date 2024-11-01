@@ -23,12 +23,10 @@ window.multiSelectDropdownHandler = {
 				if (selectedCount === 1) {
 					trigger.innerHTML = `
 		                <span class="selected-text">${selectedLabels[0]}</span>
-		                <span class="selected-count">1</span>
 		            `;
 				} else {
 					trigger.innerHTML = `
 		                <span class="selected-text">Multiple Selected</span>
-		                <span class="selected-count">${selectedCount}</span>
 		            `;
 				}
 			}
