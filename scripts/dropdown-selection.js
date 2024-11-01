@@ -17,6 +17,7 @@ window.dropdownHandler = {
 			// Check if there's an initial value and add has-value class
 			if (originalSelect && originalSelect.value) {
 				newTrigger.classList.add("has-value");
+				newTrigger.textContent = originalSelect.options[originalSelect.selectedIndex].text;
 			}
 		});
 
@@ -68,8 +69,9 @@ window.dropdownHandler = {
 					options.forEach((opt) => opt.classList.remove("selected"));
 					option.classList.add("selected");
 
-					// Close dropdown
-					container.classList.remove("open");
+					setTimeout(() => {
+						container.classList.remove("open");
+					}, 300);
 
 					// Call your handleSelectChange
 					handleSelectChange(originalSelect);

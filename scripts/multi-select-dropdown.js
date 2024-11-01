@@ -3,15 +3,12 @@ window.multiSelectDropdownHandler = {
 		// Helper function to update trigger text and styling
 		const updateTriggerText = (container, trigger, options) => {
 			const selectedCount = container.selectedValues.length;
-			const placeholder = trigger.dataset.placeholder;
 
-			// Add or remove has-value class based on selection
 			if (selectedCount === 0) {
-				trigger.innerHTML = placeholder;
+				trigger.innerHTML = "";
 				trigger.classList.remove("has-value");
 			} else {
 				trigger.classList.add("has-value");
-				// Convert NodeList to Array before using find
 				const optionsArray = Array.from(options);
 
 				const selectedLabels = container.selectedValues.map((value) => {
@@ -20,19 +17,19 @@ window.multiSelectDropdownHandler = {
 						const label = option.querySelector(".option-label");
 						return label ? label.textContent : option.textContent;
 					}
-					return value; // fallback if option not found
+					return value;
 				});
 
 				if (selectedCount === 1) {
 					trigger.innerHTML = `
-                        <span>${selectedLabels[0]}</span>
-                        <span class="selected-count">1</span>
-                    `;
+		                <span class="selected-text">${selectedLabels[0]}</span>
+		                <span class="selected-count">1</span>
+		            `;
 				} else {
 					trigger.innerHTML = `
-                        <span>Multiple Selected</span>
-                        <span class="selected-count">${selectedCount}</span>
-                    `;
+		                <span class="selected-text">Multiple Selected</span>
+		                <span class="selected-count">${selectedCount}</span>
+		            `;
 				}
 			}
 		};

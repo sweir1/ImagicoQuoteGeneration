@@ -2,7 +2,7 @@
 	const questions = [
 		{
 			id: "solutionType",
-			text: "Do you need a one-time solution or a monthly subscription?",
+			text: "One-time or subscription?",
 			type: "radio",
 			options: [
 				{ label: "One-time", value: "One-time", price: 0 },
@@ -46,7 +46,7 @@
 		},
 		{
 			id: "monthlyVideoCount",
-			text: "How many videos do you need per month?",
+			text: "How many videos do you need?",
 			type: "number",
 			min: 1,
 			max: 100,
@@ -56,25 +56,25 @@
 		},
 		{
 			id: "averageVideoLength",
-			text: "What is the average video length?",
+			text: "Average video length?",
 			type: "radio",
 			options: [
-				{ label: "Up to 1 min", value: "Up to 1 min", multiplier: 0.8 },
-				{ label: "Up to 3 mins", value: "Up to 3 mins", multiplier: 1.0 },
-				{ label: "Up to 5 mins", value: "Up to 5 mins", multiplier: 1.2 },
-				{ label: "Up to 10 mins", value: "Up to 10 mins", multiplier: 1.5 },
+				{ label: "1 min", value: "Up to 1 min", multiplier: 0.8 },
+				{ label: "3 mins", value: "Up to 3 mins", multiplier: 1.0 },
+				{ label: "5 mins", value: "Up to 5 mins", multiplier: 1.2 },
+				{ label: "10 mins", value: "Up to 10 mins", multiplier: 1.5 },
 			],
 			condition: (answers) => answers.solutionType === "Monthly subscription" && answers.mediaType === "Videos",
 			required: true,
 		},
 		{
 			id: "turnaroundTime",
-			text: "What turnaround time do you need?",
+			text: "Delivery speed?", // or "Choose delivery time?"
 			type: "radio",
 			options: [
-				{ label: "Standard", value: "Standard", multiplier: 1.0 },
-				{ label: "Fast", value: "Fast", multiplier: 1.2 },
-				{ label: "Express", value: "Express", multiplier: 1.5 },
+				{ label: "Standard (3 business days)", value: "Standard", multiplier: 1.0 },
+				{ label: "Fast (2 business days)", value: "Fast", multiplier: 1.2 },
+				{ label: "Express (1 business day)", value: "Express", multiplier: 1.5 },
 			],
 			condition: (answers) => answers.solutionType === "Monthly subscription" && answers.mediaType === "Videos",
 			required: true,
@@ -104,19 +104,19 @@
 		},
 		{
 			id: "editingComplexity",
-			text: "What level of editing complexity do you require?",
+			text: "Select video editing services?",
 			type: "radio",
 			options: [
-				{ label: "Basic Editing", value: "Basic Editing", multiplier: 1.0 },
-				{ label: "Advanced Editing", value: "Advanced Editing", multiplier: 1.3 },
-				{ label: "Premium Editing", value: "Premium Editing", multiplier: 1.6 },
+				{ label: "Basic", value: "Basic Editing", multiplier: 1.0 },
+				{ label: "Advanced", value: "Advanced Editing", multiplier: 1.3 },
+				{ label: "Premium", value: "Premium Editing", multiplier: 1.6 },
 			],
 			condition: (answers) => answers.solutionType === "Monthly subscription" && answers.mediaType === "Videos",
 			required: true,
 		},
 		{
 			id: "additionalServices",
-			text: "Do you need any additional services per video?",
+			text: "Extra services needed?",
 			type: "checkbox",
 			options: [
 				{ label: "Subtitles/Captions", value: "Subtitles/Captions", priceIncrease: 5 },
@@ -129,22 +129,22 @@
 		},
 		{
 			id: "concurrentProjects",
-			text: "How many concurrent projects do you need?",
+			text: "How many projects at once?",
 			type: "radio",
 			options: [
-				{ label: "Single Project", value: "Single Project", multiplier: 1.0 },
-				{ label: "Dual Projects", value: "Dual Projects", multiplier: 1.1 },
-				{ label: "Multiple Projects", value: "Multiple Projects", multiplier: 1.4 },
+				{ label: "One (1 active video)", value: "Single Project", multiplier: 1.0 },
+				{ label: "Two (2 active videos)", value: "Dual Projects", multiplier: 1.1 },
+				{ label: "Multiple (3 active videos)", value: "Multiple Projects", multiplier: 1.4 },
 			],
 			condition: (answers) => answers.solutionType === "Monthly subscription" && answers.mediaType === "Videos",
 			required: true,
 		},
 		{
 			id: "commitmentLevel",
-			text: "What is your preferred commitment level?",
+			text: "Choose plan length?", // or "Plan duration?"
 			type: "radio",
 			options: [
-				{ label: "Month-to-Month", value: "Month-to-Month", multiplier: 1.0 },
+				{ label: "Monthly", value: "Month-to-Month", multiplier: 1.0 },
 				{ label: "3 Months", value: "3 Months", multiplier: 0.95 },
 				{ label: "6 Months", value: "6 Months", multiplier: 0.9 },
 				{ label: "12 Months", value: "12 Months", multiplier: 0.85 },
@@ -154,7 +154,7 @@
 		},
 		{
 			id: "addPictures",
-			text: "Would you like to add pictures to your monthly subscription?",
+			text: "Add pictures?",
 			type: "radio",
 			options: [
 				{ label: "Yes", value: "Yes" },
@@ -165,7 +165,7 @@
 		},
 		{
 			id: "monthlyImageCount",
-			text: "How many images do you need edited per month?",
+			text: "Monthly images needed?",
 			type: "number",
 			min: 1,
 			max: 1000,
@@ -179,16 +179,12 @@
 		},
 		{
 			id: "editingType",
-			text: "What type of editing do you need for pictures?",
+			text: "Select picture editing services?",
 			type: "checkbox",
 			options: [
-				{ label: "Basic editing", value: "Basic editing", priceIncrease: 0 },
-				{ label: "Advanced editing", value: "Advanced editing", priceIncrease: 0.5 },
-				{
-					label: "Promotional material services",
-					value: "Promotional material services",
-					priceIncrease: 1,
-				},
+				{ label: "Basic", value: "Basic editing", priceIncrease: 0 },
+				{ label: "Advanced", value: "Advanced editing", priceIncrease: 0.5 },
+				{ label: "Promo Materials", value: "Promotional material services", priceIncrease: 1 },
 			],
 			condition: (answers) =>
 				(answers.solutionType === "Monthly subscription" && answers.mediaType === "Pictures") ||
@@ -331,33 +327,34 @@
 			].includes(question.id)
 		) {
 			return `
-				    <div class="select-container">
-				        <select name="${question.id}" class="hidden-select" style="display: none;">
-				            <option value="">${question.text}</option>
-				            ${question.options
+	            <div class="select-container">
+	                <select name="${question.id}" class="hidden-select" style="display: none;">
+	                    <option value="">${question.text}</option>
+	                    ${question.options
+							.map(
+								(option) => `
+	                        <option value="${option.value}" ${answers[question.id] === option.value ? "selected" : ""}>
+	                            ${option.label}
+	                        </option>
+	                    `,
+							)
+							.join("")}
+	                </select>
+	                <div class="custom-select-container">
+	                    <div class="custom-select-trigger" tabindex="0"></div>
+	                    <label class="select-label">${question.text}</label>
+	                    <div class="custom-options">
+	                        ${question.options
 								.map(
 									(option) => `
-				                    <option value="${option.value}" ${answers[question.id] === option.value ? "selected" : ""}>
-				                        ${option.label}
-				                    </option>
-				                `,
+	                            <div class="custom-option" data-value="${option.value}">${option.label}</div>
+	                        `,
 								)
 								.join("")}
-				        </select>
-				        <div class="custom-select-container">
-				            <div class="custom-select-trigger" tabindex="0">${question.text}</div>
-				            <div class="custom-options">
-				                ${question.options
-									.map(
-										(option) => `
-				                        <div class="custom-option" data-value="${option.value}">${option.label}</div>
-				                    `,
-									)
-									.join("")}
-				            </div>
-				        </div>
-				    </div>
-				    `;
+	                    </div>
+	                </div>
+	            </div>
+	        `;
 		}
 
 		if (question.type === "radio" && question.options.some((opt) => opt.price || opt.multiplier)) {
@@ -405,30 +402,29 @@
 		                ${question.options
 							.map(
 								(option) => `
-		                        <option value="${option.value}" ${answers[question.id]?.includes(option.value) ? "selected" : ""}>
-		                            ${option.label}
-		                        </option>
-		                    `,
+		                    <option value="${option.value}" ${answers[question.id]?.includes(option.value) ? "selected" : ""}>
+		                        ${option.label}
+		                    </option>
+		                `,
 							)
 							.join("")}
 		            </select>
 		            <div class="custom-multi-select-container">
-		                <div class="custom-select-trigger" tabindex="0" data-placeholder="${question.text}">
-		                    ${question.text}
-		                </div>
+		                <div class="custom-select-trigger" tabindex="0" data-placeholder="${question.text}"></div>
+		                <label class="select-label">${question.text}</label>
 		                <div class="custom-options">
 		                    ${question.options
 								.map(
 									(option) => `
-		                            <div class="custom-option ${answers[question.id]?.includes(option.value) ? "selected" : ""}"
-		                                 data-value="${option.value}">
-		                                <div class="option-content">
-		                                    <div class="checkbox"></div>
-		                                    <span class="option-label">${option.label}</span>
-		                                </div>
-		                                ${option.priceIncrease ? `<span class="price-increase">+$${option.priceIncrease}</span>` : ""}
+		                        <div class="custom-option ${answers[question.id]?.includes(option.value) ? "selected" : ""}"
+		                             data-value="${option.value}">
+		                            <div class="option-content">
+		                                <div class="checkbox"></div>
+		                                <span class="option-label">${option.label}</span>
 		                            </div>
-		                        `,
+		                            ${option.priceIncrease ? `<span class="price-increase">+$${option.priceIncrease}</span>` : ""}
+		                        </div>
+		                    `,
 								)
 								.join("")}
 		                </div>
@@ -439,38 +435,73 @@
 
 		if (question.type === "number") {
 			return `
-                    <input type="number"
-                           name="${question.id}"
-                           class="number-input"
-                           min="${question.min}"
-                           max="${question.max}"
-                           value="${answers[question.id] || ""}"
-                           onchange="handleInputChange(this)"
-                           placeholder="Enter a number between ${question.min} and ${question.max}">
-                `;
+		        <div class="select-container">
+		            <div class="number-input-container">
+		                <input type="number"
+		                       name="${question.id}"
+		                       class="number-input"
+		                       min="${question.min}"
+		                       max="${question.max}"
+		                       value="${answers[question.id] || ""}"
+		                       onchange="handleInputChange(this)"
+		                       placeholder=" "> <!-- Empty placeholder to control label state -->
+		                <label class="number-label">How many monthly?</label>
+		            </div>
+		        </div>
+		    `;
 		}
 
 		return "";
 	}
 
 	function updateVisibleSections() {
+		// First check if either video or picture sections should be shown
+		const videoQuestion = questions.find((q) => q.id === "videoCount");
+		const pictureQuestion = questions.find((q) => q.id === "pictureCount");
+		const shouldShowEither = videoQuestion?.condition?.(answers) || pictureQuestion?.condition?.(answers) || false;
+
+		// Get references to both sections upfront
+		const videoSection = document.getElementById("section-videoCount");
+		const pictureSection = document.getElementById("section-pictureCount");
+
 		questions.forEach((question) => {
 			const section = document.getElementById(`section-${question.id}`);
 			if (!section) return;
+
 			if (question.condition) {
 				const shouldShow = question.condition(answers);
 				section.classList.toggle("hidden", !shouldShow);
 				const grandparentDiv = section.parentElement?.parentElement;
+
 				if (grandparentDiv) {
-					// Special handling for video and picture sections
-					if (question.id === "videoCount" || question.id === "pictureCount") {
+					if ((question.id === "videoCount" || question.id === "pictureCount") && shouldShowEither) {
+						// Always set grandparent to flex for these sections
 						grandparentDiv.style.display = "flex";
+						grandparentDiv.style.flexDirection = "column";
+
+						// Handle parent div visibility based on which section this is
+						if (question.id === "videoCount") {
+							const videoParent = videoSection?.parentElement;
+							const pictureParent = pictureSection?.parentElement;
+							if (videoParent && pictureParent) {
+								videoParent.style.display = shouldShow ? "block" : "none";
+								pictureParent.style.display = !shouldShow ? "block" : "none";
+							}
+						} else if (question.id === "pictureCount") {
+							const videoParent = videoSection?.parentElement;
+							const pictureParent = pictureSection?.parentElement;
+							if (videoParent && pictureParent) {
+								pictureParent.style.display = shouldShow ? "block" : "none";
+								videoParent.style.display = !shouldShow ? "block" : "none";
+							}
+						}
 					} else {
 						grandparentDiv.style.display = shouldShow ? "flex" : "none";
 					}
 				}
 			}
 		});
+
 		window.dropdownHandler.initializeCustomDropdowns();
 		window.multiSelectDropdownHandler.initializeMultiSelectDropdowns();
 	}
